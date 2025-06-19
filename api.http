@@ -1,0 +1,27 @@
+### Criar uma nova notificação
+POST http://localhost:3000/notifications
+Content-Type: application/json
+
+{
+    "recipientId": "8f6e5d4c-3b2a-1f0e-9d8c-7b6a5f4e3d2c",
+    "content": "Você recebeu uma nova mensagem!",
+    "category": "message"
+}
+
+### Listar todas as notificações
+GET http://localhost:3000/notifications
+
+### Buscar uma notificação específica por ID
+GET http://localhost:3000/notifications/1
+
+### Atualizar uma notificação
+PATCH http://localhost:3000/notifications/1
+Content-Type: application/json
+
+{
+    "content": "Conteúdo atualizado da notificação",
+    "category": "update"
+}
+
+### Deletar uma notificação
+DELETE http://localhost:3000/notifications/1
