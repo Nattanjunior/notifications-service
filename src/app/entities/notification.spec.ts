@@ -1,4 +1,4 @@
-import { Content } from './content';
+import { Content } from '../../app/entities/content';
 import { Notification } from './notifications';
 import { describe, expect, it } from '@jest/globals';
 
