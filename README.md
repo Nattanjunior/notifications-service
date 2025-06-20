@@ -1,4 +1,4 @@
-# Serviço de Notificações
+# Serviço de Notificações (em Andamento)
 
 Este é um projeto de serviço de notificações construído com [NestJS](https://nestjs.com/).
 
