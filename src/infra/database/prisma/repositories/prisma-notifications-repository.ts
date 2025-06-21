@@ -8,10 +8,17 @@ import { PrismaNotificationMapper } from '../mappers/prisma-notification-mapper'
 export class PrismaNotificationsRepository implements NotificationRepository {
   constructor(private prismaService: PrismaService) { }
 
+  async findById(notification: string): Promise<Notification | null> {
+   throw new Error("")
+  }
   async create(notification: Notification): Promise<void> {
     const row = PrismaNotificationMapper.toPrisma(notification)
     await this.prismaService.notification.create({
       data: row,
     });
   }
+
+  async save(notification: Notification): Promise<void> {
+    throw new Error("Methoad not implemented")
+   }
 }
