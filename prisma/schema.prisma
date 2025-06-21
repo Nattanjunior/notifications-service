@@ -19,6 +19,7 @@ model Notification {
   recipientId String
   category    String
   readAt      DateTime?
+  canceledAt  DateTime?
   createdAt   DateTime  @default(now())
 
   @@index([recipientId])
