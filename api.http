@@ -15,7 +15,7 @@ GET http://localhost:3000/notifications
 GET http://localhost:3000/notifications/1
 
 ### Atualizar uma notificação
-PATCH http://localhost:3000/notifications/1
+PATCH http://localhost:3000/notifications/59ecf3de-0b05-4f5b-a37d-af952cd0467f/cancel
 Content-Type: application/json
 
 {
@@ -24,4 +24,15 @@ Content-Type: application/json
 }
 
 ### Deletar uma notificação
-DELETE http://localhost:3000/notifications/1
+
+### Contar notificações de um destinatário
+GET http://localhost:3000/notifications/count/from/8f6e5d4c-3b2a-1f0e-9d8c-7b6a5f4e3d2c
+
+### Buscar notificações de um destinatário
+GET http://localhost:3000/notifications/from/8f6e5d4c-3b2a-1f0e-9d8c-7b6a5f4e3d2c
+
+### Marcar notificação como lida
+PATCH http://localhost:3000/notifications/59ecf3de-0b05-4f5b-a37d-af952cd0467f/read
+
+### Marcar notificação como não lida
+PATCH http://localhost:3000/notifications/59ecf3de-0b05-4f5b-a37d-af952cd0467f/unread
