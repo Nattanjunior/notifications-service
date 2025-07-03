@@ -98,6 +98,12 @@ $ npm run test:cov
 
 ## Documentação da API
 
+A documentação interativa da API está disponível via Swagger em:
+
+- http://localhost:3000/docs
+
+Utilize esta interface para explorar e testar os endpoints disponíveis de forma prática.
+
 ### `POST /notifications`
 
 Cria uma nova notificação.
