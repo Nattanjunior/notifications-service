@@ -49,12 +49,14 @@ jobs:
           zip -r ../deployment.zip . -x "*.git*" "*.github*" "test/" "*.log" "*.md" "npm-debug.log" 
         working-directory: src
 
-      - name: Deploy to AWS Lambda
-        uses: appleboy/lambda-action@v0.2.0
+      - name: Deploy to AWS ECS
+        uses: appleboy/ecs-action@v0.2.0
         with:
+          cluster_name: notifications-service-cluster
+          service_name: notifications-service
+          task_definition: notifications-service
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws_region: ${{ secrets.AWS_REGION }}
-          function_name: notifications-service
           zip_file: deployment.zip
         working-directory: src
