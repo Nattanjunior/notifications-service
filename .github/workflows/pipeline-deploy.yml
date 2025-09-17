@@ -1,4 +1,4 @@
-name: Pipeline Deploy
+name: Deploy Notifications Service
 
 on:
   push:
@@ -17,46 +17,54 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Install dependencies
-        run: npm install
-        working-directory: src
+      # - name: Install dependencies
+      #   run: npm install
+      #   working-directory: src
        
-      - name: Backup and patch prisma schema for lambda
-        run: | 
-          cp prisma/schema.prisma prisma/schema.prisma.backup
-          sed -i 's/binaryTargets = \[.*\]/binaryTargets = ["native" or "rhel-openssl-3.0.x"]/' prisma/schema.prisma
-        working-directory: src
+      # - name: Backup and patch prisma schema for lambda
+      #   run: | 
+      #     cp prisma/schema.prisma prisma/schema.prisma.backup
+      #     sed -i 's/binaryTargets = \[.*\]/binaryTargets = ["native" or "rhel-openssl-3.0.x"]/' prisma/schema.prisma
+      #   working-directory: src
 
-      - name: Generate Prisma client
-        run: npx prisma generate
-        working-directory: src
+      # - name: Generate Prisma client
+      #   run: npx prisma generate
+      #   working-directory: src
 
-      - name: Restore original prisma schema
-        run: mv prisma/schema.prisma.backup prisma/schema.prisma
-        working-directory: src
+      # - name: Restore original prisma schema
+      #   run: mv prisma/schema.prisma.backup prisma/schema.prisma
+      #   working-directory: src
 
-      - name: Run tests
-        run: npm run test
-        working-directory: src
+      # - name: Run tests
+      #   run: npm run test
+      #   working-directory: src
 
       - name: Build the application
         run: npm run build
-        working-directory: src
 
-      - name: Zip Lambda source and dependencies
-        run: |
-          cd src
-          zip -r ../deployment.zip . -x "*.git*" "*.github*" "test/" "*.log" "*.md" "npm-debug.log" 
-        working-directory: src
+      - name: Login to Docker Hub
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Deploy to AWS ECS
-        uses: appleboy/ecs-action@v0.2.0
-        with:
-          cluster_name: notifications-service-cluster
-          service_name: notifications-service
-          task_definition: notifications-service
-          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws_region: ${{ secrets.AWS_REGION }}
-          zip_file: deployment.zip
-        working-directory: src
+      - name: Build Docker image
+        run: docker build -t Nathanjunior/notifications-service .
+
+      - name: Push Docker image
+        run: docker push Nathanjunior/notifications-service
+
+      # - name: Zip Lambda source and dependencies
+      #   run: |
+      #     cd src
+      #     zip -r ../deployment.zip . -x "*.git*" "*.github*" "test/" "*.log" "*.md" "npm-debug.log" 
+      #   working-directory: src
+
+      # - name: Deploy to AWS ECS
+      #   uses: appleboy/ecs-action@v0.2.0
+      #   with:
+      #     cluster_name: notifications-service-cluster
+      #     service_name: notifications-service
+      #     task_definition: notifications-service
+      #     aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #     aws_region: ${{ secrets.AWS_REGION }}
+      #     zip_file: deployment.zip
+      #   working-directory: src
