@@ -33,8 +33,5 @@ jobs:
     steps:
       - name: Pull image from Docker Hub
         run: docker pull nattanjr/notifications-service:latest
-
       - name: Run docker container
         run: docker run -d -p 8080:80 --name deploy_notifications_service nattanjr/notifications-service:v1.0.0
-        with:
-          node-version: '22'
