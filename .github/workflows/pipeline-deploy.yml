@@ -23,15 +23,15 @@ jobs:
       - name: Login to Docker Hub
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
       - name: Build Docker image
-        run: docker build -t nattanjr/notifications-service:v1.0.0 .
+        run: docker build -t nattanjr/notifications-service .
       - name: Push Docker image
-        run: docker push nattanjr/notifications-service:v1.0.0
+        run: docker push nattanjr/notifications-service
 
   deploy:
     needs: build
     runs-on: self-hosted 
     steps:
       - name: Pull image from Docker Hub
-        run: docker pull nattanjr/notifications-service:latest
+        run: docker pull nattanjr/notifications-service
       - name: Run docker container
-        run: docker run -d -p 8080:80 --name deploy_notifications_service nattanjr/notifications-service:v1.0.0
+        run: docker run -d -p 8080:80 --name deploy_notifications_service nattanjr/notifications-service
