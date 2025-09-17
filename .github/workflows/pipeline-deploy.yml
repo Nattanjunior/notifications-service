@@ -40,7 +40,7 @@ jobs:
       #   working-directory: src
 
       - name: Build the application
-        run: npm run build
+        run: npm run build --if-present
 
       - name: Login to Docker Hub
         run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
