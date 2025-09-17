@@ -23,11 +23,11 @@ jobs:
       - name: Build the application
         run: npm run build  # sem working-directory
 
-      - name: Login to Docker Hub
+      - name: Login to Docker Hub service
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin"
 
       - name: Build Docker image
-        run: docker build -t Nathanjunior/notifications-service .
+        run: docker build -t nattanjr/notifications-service .
 
       - name: Push Docker image
-        run: docker push Nathanjunior/notifications-service
+        run: docker push nattanjr/notifications-service
