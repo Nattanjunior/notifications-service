@@ -1,8 +1,27 @@
 services:
+  app:
+    build:
+      context: .
+      dockerfile: dockerfile
+    image: notifications-service:latest
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      DATABASE_URL: postgres://postgres:postgres@db:5432/notifications-db?schema=public
+    depends_on:
+      - db
+    expose:
+      - "3000"
+
   db:
     image: postgres:16.8-alpine3.20
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: notifications-db
     ports:
-      - 5432:5432 
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data: 
