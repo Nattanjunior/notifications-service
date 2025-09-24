@@ -15,4 +15,4 @@ COPY dist/ ./dist/
 EXPOSE 80
 
 # 5. Comando para executar a aplicação
-CMD ["node", "dist/main"]
+CMD ["node", "dist/main.js"]
