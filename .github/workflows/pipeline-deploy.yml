@@ -11,7 +11,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
@@ -34,4 +33,4 @@ jobs:
       - name: Pull image from Docker Hub
         run: docker pull nattanjr/notifications-service
       - name: Run docker container
-        run: docker run -d -p 8080:80 --name deploy_notifications_service nattanjr/notifications-service
+        run: docker run -d -p 8080:80 -e DATABASE_USER=${{secrets.DATABASE_USER}}}} -e DATABASE_PASS=${{secrets.DATABASE_PASS}} -e DATABASE_URL=$'{{secrets.DATABASE_URL}}' --name deploy_notifications_service nattanjr/notifications-service
