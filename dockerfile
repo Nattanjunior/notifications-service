@@ -6,6 +6,8 @@ COPY package*.json ./
 
 RUN npm install --production
 
+RUN npx prisma generate
+
 COPY dist/ ./dist/
 
 EXPOSE 80
