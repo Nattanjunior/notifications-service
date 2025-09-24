@@ -7,6 +7,7 @@ import { ReadNotification } from '@app/use-cases/read-notification';
 import { UnreadNotification } from '@app/use-cases/unread-notification';
 import { CountRecipientNotification } from '@app/use-cases/count-recipient-notification';
 import { GetRecipientNotification } from '@app/use-cases/get-recipient-notifications';
+import { NotificationsGateway } from '@app/events/SendNotification.gateway';
 
 @Controller('notifications')
 export class NotificationsController {
@@ -17,6 +18,7 @@ export class NotificationsController {
     private unreadNotification: UnreadNotification,
     private countRecipientNotification: CountRecipientNotification,
     private getRecipientNotification: GetRecipientNotification,
+    private readonly gateway: NotificationsGateway
   ) { }
 
   @Patch(':id/cancel')
@@ -72,8 +74,9 @@ export class NotificationsController {
       category,
     });
 
-    return {
-      notification: NotificationViewModel.toHTTP(notification),
-    };
+
+    const notificationview = NotificationViewModel.toHTTP(notification)
+
+    return this.gateway.sendNotification(notificationview);
   }
 }
