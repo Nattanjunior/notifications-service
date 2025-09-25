@@ -30,9 +30,14 @@ jobs:
     needs: build
     runs-on: self-hosted 
     steps:
+      - name: Clean up Docker resources
+        run: |
+          docker system prune -f
+          docker volume prune -f
+          docker container prune -f
       - name: Pull image from Docker Hub
         run: docker pull nattanjr/notifications-service
       - name: Remove docker container
-        run: docker rm -f deploy_notifications_service
+        run: docker rm -f deploy_notifications_service || true
       - name: Run docker container
         run: docker run -d -p 8080:3000  -e DATABASE_USER=${{secrets.DATABASE_USER}} -e DATABASE_PASS=${{secrets.DATABASE_PASS}} -e DATABASE_URL=${{secrets.DATABASE_URL}} --name deploy_notifications_service nattanjr/notifications-service
