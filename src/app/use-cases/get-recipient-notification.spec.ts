@@ -26,7 +26,7 @@ describe('Get notifications', () => {
     );
 
     const { notification } = await getRecipientNotifications.execute({
-      recipientId: 'recipientId-1'
+      recipientId: 'recipient-1'
     });
 
     expect(notification).toHaveLength(2);
