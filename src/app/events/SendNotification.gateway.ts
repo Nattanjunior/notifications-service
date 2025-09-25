@@ -27,7 +27,6 @@ export class NotificationsGateway {
   handleMessage(@MessageBody() data: NotificationProps, @ConnectedSocket() client: Socket) {
     console.log(`Mensagem recebida:`, data);
 
-    // reenviando para todos conectados
     this.server.emit('newNotification', {
       message: data,
       date: new Date(),
