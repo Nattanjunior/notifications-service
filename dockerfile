@@ -8,10 +8,11 @@ COPY prisma/ ./prisma/
 RUN npm install --production
 
 RUN npx prisma generate
-RUN npx prisma migrate deploy 
 
 COPY dist/ ./dist/
 
 EXPOSE 3000
 
-CMD ["node", "dist/main.js"]
+CMD npx prisma migrate deploy && node dist/main.js
+
+# CMD ["","node", "dist/main.js"]
