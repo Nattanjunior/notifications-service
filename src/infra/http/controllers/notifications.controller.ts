@@ -65,7 +65,7 @@ export class NotificationsController {
     })
   }
 
-  @ApiOperation({ 
+  @ApiOperation({
     summary: 'Teste com o RecipietId: 8f6e5d4c-3b2a-1f0e-9d8c-7b6a5f4e3d2c',
   })
   @Post()
@@ -79,8 +79,7 @@ export class NotificationsController {
     });
 
 
-    const notificationview = NotificationViewModel.toHTTP(notification)
-
-    return this.gateway.sendNotification(notificationview);
+    this.gateway.sendNotification(notification);
+    return { notification: notification };
   }
 }
