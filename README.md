@@ -12,6 +12,14 @@ Este é um microsserviço de notificações construído com **NestJS**, **Prisma
 
 **API em Produção:** [http://3.145.34.134:8080](http://3.145.34.134:8080)
 
+### **☁️ Hospedagem AWS EC2**
+O serviço está hospedado em uma instância **Amazon EC2** com:
+- **IP Público:** `3.145.34.134`
+- **Porta:** `8080`
+- **Containerização:** Docker com multi-stage build
+- **Banco de Dados:** PostgreSQL 16.8 em container
+- **Deploy:** Automatizado via GitHub Actions
+
 ## ✨ **Funcionalidades**
 
 - ✅ **Criação de notificações** com validação de conteúdo
@@ -19,7 +27,7 @@ Este é um microsserviço de notificações construído com **NestJS**, **Prisma
 - ✅ **Marcar como lida/não lida** notificações
 - ✅ **Contagem de notificações** por destinatário
 - ✅ **Consulta de notificações** por destinatário
-- ✅ **Notificações em tempo real** via WebSocket
+- ✅ **Notificações em tempo real** via WebSocket.IO (FUNCIONANDO EM PRODUÇÃO)
 - ✅ **Validação de dados** com class-validator
 - ✅ **Documentação interativa** com Swagger
 - ✅ **Testes automatizados** com Jest
@@ -33,10 +41,11 @@ Este é um microsserviço de notificações construído com **NestJS**, **Prisma
 - **ORM:** Prisma 6.10.1
 - **Banco de Dados:** PostgreSQL 16.8
 - **Validação:** class-validator & class-transformer
-- **WebSocket:** Socket.IO
+- **WebSocket:** Socket.IO (WebSocket.IO) - **FUNCIONANDO EM PRODUÇÃO**
 - **Documentação:** Swagger/OpenAPI
 
 ### **DevOps & Infraestrutura**
+- **Hospedagem:** Amazon EC2
 - **Containerização:** Docker & Docker Compose
 - **CI/CD:** GitHub Actions
 - **Deploy:** Self-hosted runner
@@ -191,19 +200,46 @@ A documentação interativa da API está disponível via Swagger:
 - **Local:** http://localhost:3000/docs
 - **Produção:** [http://3.145.34.134:8080/docs](http://3.145.34.134:8080/docs)
 
-### **🔌 WebSocket**
-Para notificações em tempo real, conecte-se ao WebSocket:
+### **🔌 WebSocket.IO - Notificações em Tempo Real**
 
+**✅ FUNCIONANDO EM PRODUÇÃO** - O WebSocket.IO está totalmente operacional e recebendo notificações em tempo real.
+
+#### **Conectando ao WebSocket:**
 ```javascript
-// Exemplo de conexão WebSocket
+// Conexão com o servidor em produção
 const socket = io('http://3.145.34.134:8080', {
-  namespace: 'events'
+  namespace: '/events',
+  transports: ['websocket', 'polling']
 });
 
+// Escutar novas notificações
 socket.on('newNotification', (notification) => {
-  console.log('Nova notificação:', notification);
+  console.log('🔔 Nova notificação recebida:', notification);
+});
+
+// Escutar eventos de conexão
+socket.on('connect', () => {
+  console.log('✅ Conectado ao WebSocket:', socket.id);
+});
+
+socket.on('disconnect', () => {
+  console.log('❌ Desconectado do WebSocket');
 });
 ```
+
+#### **🧪 Cliente de Teste Incluído**
+O projeto inclui um cliente de teste completo:
+- **HTML:** `websocket-client.html` - Interface visual para testar
+- **Node.js:** `websocket-client.js` - Cliente programático
+
+**Como usar o cliente de teste:**
+1. Abra `websocket-client.html` no navegador
+2. Clique em "Conectar" 
+3. Crie uma notificação
+4. Veja a notificação chegando em tempo real via WebSocket!
+
+#### **🔧 Integração Automática**
+Quando uma notificação é criada via API REST (`POST /notifications`), ela é automaticamente enviada via WebSocket para todos os clientes conectados no namespace `/events`.
 
 ## 🔗 **Endpoints da API**
 
@@ -328,7 +364,7 @@ O projeto possui pipeline automatizada com:
 - ✅ **Build automatizado** no push para main
 - ✅ **Testes automatizados** antes do deploy
 - ✅ **Build da imagem Docker** otimizada
-- ✅ **Deploy automático** para servidor self-hosted
+- ✅ **Deploy automático** para AWS EC2 (self-hosted runner)
 - ✅ **Limpeza automática** de recursos Docker
 
 ### **Docker**
@@ -336,6 +372,7 @@ O projeto possui pipeline automatizada com:
 - **Imagem Alpine** para menor tamanho
 - **Usuário não-root** para segurança
 - **Health checks** integrados
+- **Deploy em AWS EC2** com containerização completa
 
 ---
 
@@ -343,8 +380,9 @@ O projeto possui pipeline automatizada com:
 
 ### **Logs**
 - Logs estruturados com timestamps
-- Conexões WebSocket monitoradas
+- Conexões WebSocket monitoradas em produção
 - Erros capturados e logados
+- Monitoramento de conexões/disconexões WebSocket.IO
 
 ### **Métricas**
 - Contagem de notificações por destinatário
