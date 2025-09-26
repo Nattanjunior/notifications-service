@@ -8,6 +8,7 @@ import { UnreadNotification } from '@app/use-cases/unread-notification';
 import { CountRecipientNotification } from '@app/use-cases/count-recipient-notification';
 import { GetRecipientNotification } from '@app/use-cases/get-recipient-notifications';
 import { NotificationsGateway } from '@app/events/SendNotification.gateway';
+import { ApiOperation } from '@nestjs/swagger';
 
 @Controller('notifications')
 export class NotificationsController {
@@ -64,6 +65,9 @@ export class NotificationsController {
     })
   }
 
+  @ApiOperation({ 
+    summary: 'Teste com o RecipietId: 8f6e5d4c-3b2a-1f0e-9d8c-7b6a5f4e3d2c',
+  })
   @Post()
   async create(@Body() body: CreateNotificationDto) {
     const { recipientId, content, category } = body;

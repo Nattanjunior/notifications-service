@@ -9,7 +9,13 @@ import {
 import { Server, Socket } from 'socket.io';
 
 
-@WebSocketGateway(80, { namespace: 'events' })
+@WebSocketGateway({
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"]
+  },
+  namespace: '/events'
+})
 export class NotificationsGateway {
 
   @WebSocketServer()
