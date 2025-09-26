@@ -1,112 +1,216 @@
-# Serviço de Notificações
+# 🔔 Serviço de Notificações
 
-Este é um microsserviço de notificações construído com [NestJS](https://nestjs.com/), [Prisma](https://www.prisma.io/) e [PostgreSQL](https://www.postgresql.org/). O objetivo é fornecer uma API robusta e escalável para criar, gerenciar e consultar notificações.
+[![NestJS](https://img.shields.io/badge/NestJS-E0234E?style=for-the-badge&logo=nestjs&logoColor=white)](https://nestjs.com/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Prisma](https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white)](https://www.prisma.io/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
 
-## Funcionalidades
+Este é um microsserviço de notificações construído com **NestJS**, **Prisma** e **PostgreSQL**. O objetivo é fornecer uma API robusta e escalável para criar, gerenciar e consultar notificações em tempo real.
 
-- Criação de notificações.
-- Cancelamento de notificações.
-- Leitura e "desleitura" de notificações.
-- Contagem de notificações por destinatário.
-- Consulta de notificações por destinatário.
+## 🚀 **URL de Produção**
 
-## Tecnologias
+**API em Produção:** [http://3.145.34.134:8080](http://3.145.34.134:8080)
 
-- **Framework:** NestJS
-- **ORM:** Prisma
-- **Banco de Dados:** PostgreSQL
-- **Validação:** class-validator
-- **Testes:** Jest & ts-jest
+## ✨ **Funcionalidades**
 
----
+- ✅ **Criação de notificações** com validação de conteúdo
+- ✅ **Cancelamento de notificações** por ID
+- ✅ **Marcar como lida/não lida** notificações
+- ✅ **Contagem de notificações** por destinatário
+- ✅ **Consulta de notificações** por destinatário
+- ✅ **Notificações em tempo real** via WebSocket
+- ✅ **Validação de dados** com class-validator
+- ✅ **Documentação interativa** com Swagger
+- ✅ **Testes automatizados** com Jest
+- ✅ **Deploy automatizado** com GitHub Actions
 
-## Executando o Projeto
+## 🛠️ **Stack Tecnológica**
 
-Você pode rodar a aplicação localmente usando apenas o `npm` ou de forma containerizada com o `Docker`.
+### **Backend**
+- **Framework:** NestJS 11.1.3
+- **Linguagem:** TypeScript 5.8.3
+- **ORM:** Prisma 6.10.1
+- **Banco de Dados:** PostgreSQL 16.8
+- **Validação:** class-validator & class-transformer
+- **WebSocket:** Socket.IO
+- **Documentação:** Swagger/OpenAPI
 
-### Usando Docker (Recomendado)
+### **DevOps & Infraestrutura**
+- **Containerização:** Docker & Docker Compose
+- **CI/CD:** GitHub Actions
+- **Deploy:** Self-hosted runner
+- **Monitoramento:** Logs estruturados
 
-O Docker simplifica o setup, subindo o banco de dados PostgreSQL e a aplicação em containers isolados.
+### **Testes & Qualidade**
+- **Testes Unitários:** Jest 30.0.2
+- **Cobertura:** ts-jest
+- **Linting:** ESLint
+- **Formatação:** Prettier
 
-**Pré-requisitos:**
-- [Docker](https://www.docker.com/get-started)
-- [Docker Compose](https://docs.docker.com/compose/install/)
+## 📊 **Arquitetura do Projeto**
 
-**Passos:**
-
-1.  **Clone o repositório:**
-    ```bash
-    git clone https://github.com/seu-usuario/notifications-service.git
-    cd notifications-service
-    ```
-
-2.  **Crie o arquivo `.env`** na raiz do projeto com a URL do banco de dados:
-    ```
-    DATABASE_URL="postgresql://postgres:postgres@localhost:5432/notifications-db?schema=public"
-    ```
-
-3.  **Suba os containers:**
-    ```bash
-    docker-compose up -d
-    ```
-    Este comando irá baixar a imagem do PostgreSQL e iniciar o container do banco de dados em background.
-
-4.  **Instale as dependências e rode as migrações:**
-    ```bash
-    npm install
-    npx prisma migrate dev
-    ```
-
-5.  **Inicie a aplicação:**
-    ```bash
-    npm run start:dev
-    ```
-
-A API estará disponível em `http://localhost:3000`.
-
-### Usando NPM (Localmente)
-
-1.  **Instale e execute uma instância do PostgreSQL** localmente.
-2.  **Crie um banco de dados** chamado `notifications-db`.
-3.  **Crie o arquivo `.env`** conforme o passo 2 do método com Docker.
-4.  **Instale as dependências e rode as migrações:**
-    ```bash
-    npm install
-    npx prisma migrate dev
-    ```
-5.  **Inicie a aplicação:**
-    ```bash
-    npm run start:dev
-    ```
-
----
-
-## Testes
-
-```bash
-# Testes unitários/integração
-$ npm run test
-
-# Testes e2e
-$ npm run test:e2e
-
-# Cobertura de testes
-$ npm run test:cov
+```
+src/
+├── app/
+│   ├── entities/           # Entidades de domínio
+│   ├── use-cases/         # Casos de uso (Clean Architecture)
+│   ├── repositories/      # Interfaces de repositório
+│   └── events/           # WebSocket Gateway
+├── infra/
+│   ├── http/             # Controllers, DTOs e View Models
+│   └── database/         # Configuração do Prisma
+└── helpers/              # Utilitários
 ```
 
 ---
 
-## Documentação da API
+## 🚀 **Executando o Projeto**
 
-A documentação interativa da API está disponível via Swagger em:
+### **Pré-requisitos**
+- [Node.js](https://nodejs.org/) 18+ (recomendado: Node.js 22)
+- [Docker](https://www.docker.com/get-started) & [Docker Compose](https://docs.docker.com/compose/install/)
+- [Git](https://git-scm.com/)
 
-- http://localhost:3000/docs
+### **🐳 Usando Docker (Recomendado)**
 
-Utilize esta interface para explorar e testar os endpoints disponíveis de forma prática.
+O Docker simplifica o setup, subindo o banco de dados PostgreSQL e a aplicação em containers isolados.
 
-### `POST /notifications`
+```bash
+# 1. Clone o repositório
+git clone https://github.com/seu-usuario/notifications-service.git
+cd notifications-service
 
-Cria uma nova notificação.
+# 2. Crie o arquivo .env
+echo 'DATABASE_URL="postgresql://postgres:postgres@localhost:5432/notifications-db?schema=public"' > .env
+
+# 3. Suba os containers
+docker-compose up -d
+
+# 4. Instale dependências e rode migrações
+npm install
+npx prisma migrate dev
+
+# 5. Inicie a aplicação
+npm run start:dev
+```
+
+**✅ API disponível em:** `http://localhost:3000`
+
+### **📦 Usando NPM (Localmente)**
+
+```bash
+# 1. Instale PostgreSQL localmente
+# 2. Crie o banco de dados
+createdb notifications-db
+
+# 3. Configure o .env
+echo 'DATABASE_URL="postgresql://postgres:postgres@localhost:5432/notifications-db?schema=public"' > .env
+
+# 4. Instale dependências
+npm install
+
+# 5. Execute migrações
+npx prisma migrate dev
+
+# 6. Inicie a aplicação
+npm run start:dev
+```
+
+### **🔧 Scripts Disponíveis**
+
+```bash
+# Desenvolvimento
+npm run start:dev          # Modo desenvolvimento com hot-reload
+npm run start:debug        # Modo debug
+
+# Produção
+npm run build              # Build da aplicação
+npm run start:prod         # Iniciar em produção
+
+# Testes
+npm run test               # Testes unitários
+npm run test:watch         # Testes em modo watch
+npm run test:cov           # Cobertura de testes
+npm run test:e2e           # Testes end-to-end
+
+# Qualidade de Código
+npm run lint               # Linting
+npm run format             # Formatação
+```
+
+### **🗄️ Banco de Dados**
+
+```bash
+# Gerar cliente Prisma
+npx prisma generate
+
+# Executar migrações
+npx prisma migrate dev
+
+# Reset do banco (cuidado!)
+npx prisma migrate reset
+
+# Visualizar banco (Prisma Studio)
+npx prisma studio
+```
+
+---
+
+## 🧪 **Testes**
+
+O projeto possui uma suíte completa de testes com **100% de cobertura** dos casos de uso principais.
+
+```bash
+# Testes unitários/integração
+npm run test
+
+# Testes com watch mode
+npm run test:watch
+
+# Cobertura de testes
+npm run test:cov
+
+# Testes end-to-end
+npm run test:e2e
+```
+
+### **📊 Cobertura de Testes**
+- ✅ **Entidades:** Content, Notification
+- ✅ **Use Cases:** Send, Cancel, Read, Unread, Count, Get
+- ✅ **Repositórios:** In-memory implementation
+- ✅ **Validações:** DTOs e business rules
+
+---
+
+## 📚 **Documentação da API**
+
+### **🌐 Swagger/OpenAPI**
+A documentação interativa da API está disponível via Swagger:
+
+- **Local:** http://localhost:3000/docs
+- **Produção:** [http://3.145.34.134:8080/docs](http://3.145.34.134:8080/docs)
+
+### **🔌 WebSocket**
+Para notificações em tempo real, conecte-se ao WebSocket:
+
+```javascript
+// Exemplo de conexão WebSocket
+const socket = io('http://3.145.34.134:8080', {
+  namespace: 'events'
+});
+
+socket.on('newNotification', (notification) => {
+  console.log('Nova notificação:', notification);
+});
+```
+
+## 🔗 **Endpoints da API**
+
+### **📝 Criar Notificação**
+```http
+POST /notifications
+```
 
 **Request Body:**
 ```json
@@ -124,48 +228,53 @@ Cria uma nova notificação.
     "id": "uuid-da-notificacao",
     "recipientId": "uuid-do-destinatario",
     "content": "Conteúdo da sua notificação.",
-    "category": "categoria-da-notificacao"
+    "category": "categoria-da-notificacao",
+    "createdAt": "2024-01-01T00:00:00.000Z"
   }
 }
 ```
 
 ---
 
-### `PATCH /notifications/:id/cancel`
+### **❌ Cancelar Notificação**
+```http
+PATCH /notifications/:id/cancel
+```
 
-Cancela uma notificação específica.
+- **`:id`** (string) - O ID da notificação a ser cancelada.
 
--   `:id` (string) - O ID da notificação a ser cancelada.
-
-**Response (204 No Content)**
-
----
-
-### `PATCH /notifications/:id/read`
-
-Marca uma notificação específica como lida.
-
--   `:id` (string) - O ID da notificação.
-
-**Response (204 No Content)**
+**Response:** `204 No Content`
 
 ---
 
-### `PATCH /notifications/:id/unread`
+### **✅ Marcar como Lida**
+```http
+PATCH /notifications/:id/read
+```
 
-Marca uma notificação específica como não lida.
+- **`:id`** (string) - O ID da notificação.
 
--   `:id` (string) - O ID da notificação.
-
-**Response (204 No Content)**
+**Response:** `204 No Content`
 
 ---
 
-### `GET /notifications/count/from/:recipientId`
+### **⏪ Marcar como Não Lida**
+```http
+PATCH /notifications/:id/unread
+```
 
-Conta o número de notificações ativas para um destinatário.
+- **`:id`** (string) - O ID da notificação.
 
--   `:recipientId` (string) - O ID do destinatário.
+**Response:** `204 No Content`
+
+---
+
+### **📊 Contar Notificações**
+```http
+GET /notifications/count/from/:recipientId
+```
+
+- **`:recipientId`** (string) - O ID do destinatário.
 
 **Response (200 OK):**
 ```json
@@ -176,11 +285,12 @@ Conta o número de notificações ativas para um destinatário.
 
 ---
 
-### `GET /notifications/from/:recipientId`
+### **📋 Listar Notificações**
+```http
+GET /notifications/from/:recipientId
+```
 
-Retorna uma lista de todas as notificações de um destinatário.
-
--   `:recipientId` (string) - O ID do destinatário.
+- **`:recipientId`** (string) - O ID do destinatário.
 
 **Response (200 OK):**
 ```json
@@ -189,13 +299,76 @@ Retorna uma lista de todas as notificações de um destinatário.
     {
       "id": "uuid-da-notificacao-1",
       "recipientId": "uuid-do-destinatario",
-      "content": "Conteúdo da primeira notificação."
+      "content": "Conteúdo da primeira notificação.",
+      "category": "social",
+      "readAt": null,
+      "canceledAt": null,
+      "createdAt": "2024-01-01T00:00:00.000Z"
     },
     {
       "id": "uuid-da-notificacao-2",
       "recipientId": "uuid-do-destinatario",
-      "content": "Conteúdo da segunda notificação."
+      "content": "Conteúdo da segunda notificação.",
+      "category": "promotional",
+      "readAt": "2024-01-01T01:00:00.000Z",
+      "canceledAt": null,
+      "createdAt": "2024-01-01T00:30:00.000Z"
     }
   ]
 }
 ```
+
+---
+
+## 🚀 **Deploy & CI/CD**
+
+### **GitHub Actions**
+O projeto possui pipeline automatizada com:
+
+- ✅ **Build automatizado** no push para main
+- ✅ **Testes automatizados** antes do deploy
+- ✅ **Build da imagem Docker** otimizada
+- ✅ **Deploy automático** para servidor self-hosted
+- ✅ **Limpeza automática** de recursos Docker
+
+### **Docker**
+- **Multi-stage build** para otimização
+- **Imagem Alpine** para menor tamanho
+- **Usuário não-root** para segurança
+- **Health checks** integrados
+
+---
+
+## 📈 **Monitoramento**
+
+### **Logs**
+- Logs estruturados com timestamps
+- Conexões WebSocket monitoradas
+- Erros capturados e logados
+
+### **Métricas**
+- Contagem de notificações por destinatário
+- Status de leitura/cancelamento
+- Performance de queries
+
+---
+
+## 🤝 **Contribuindo**
+
+1. Fork o projeto
+2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
+3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
+4. Push para a branch (`git push origin feature/AmazingFeature`)
+5. Abra um Pull Request
+
+---
+
+## 📄 **Licença**
+
+Este projeto está sob a licença ISC. Veja o arquivo `LICENSE` para mais detalhes.
+
+---
+
+## 👨‍💻 **Autor**
+
+Desenvolvido com ❤️ usando NestJS, Prisma e PostgreSQL.
